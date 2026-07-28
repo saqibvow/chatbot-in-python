@@ -1,9 +1,10 @@
 from google import genai
 import streamlit as st
 import os 
-from dotenv import load_file
-load_file() 
-GEMINI_API_KEY=os.getenv["GEMINI_API_KEY"]
+from dotenv import load_dotenv
+load_dotenv() 
+GEMINI_API_KEY=os.getenv("GEMINI_API_KEY")
+title = st.title("welcome to my chatbot")
 user_input = st.chat_input("write  something here")
 
 if user_input:
