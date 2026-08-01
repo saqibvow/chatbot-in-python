@@ -4,6 +4,7 @@ from openai import OpenAI
 # ------------------client instance initialize ------------------
 
 client = OpenAI(base_url="https://gen.pollinations.ai/v1", api_key=st.secrets[("POLLINATIONS_API_KEY ")]
+)
 
 
 # ------ session state for saving data of simple  variables ------------
