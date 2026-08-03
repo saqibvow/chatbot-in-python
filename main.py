@@ -3,18 +3,19 @@ from openai import OpenAI
 
 # ------------------client instance initialize ------------------
 
-client = OpenAI(base_url="https://gen.pollinations.ai/v1", api_key=st.secrets[("POLLINATIONS_API_KEY ")]
+client = OpenAI(base_url="https://gen.pollinations.ai/v1", api_key=st.secrets[("POLLINATIONS_API_KEY")]
 )
 
 
 # ------ session state for saving data of simple  variables ------------
 
 if "messages" not in st.session_state:
-   st.session_state.messages = []
+     st.session_state.messages = []
+  
 
 for chat in  st.session_state.messages:
-    st.chat_message(chat["role"])
-    st.markdown(chat["content"])
+    with st.chat_message(chat["role"]):
+      st.markdown(chat["content"])
 
 # -------------side-bar rerun  option-----------------
 
@@ -25,6 +26,7 @@ with  st.sidebar:
     st.caption("If you click Rerun button the chat will be reset ")
     if st.button("Rerun"):
         st.session_state.messages= []
+        st.rerun()
 
         
 
@@ -48,8 +50,14 @@ if user_input and user_input.strip():
 
 
     with st.spinner("🤖 Thinking..."):
-        response = client.chat.completions.create(model="openai", messages=st.session_state.messages)
-        ai_response= response.choices[0].message.content
-     
-    st.chat_message("assistant").write(ai_response)
-    st.session_state.messages.append({"role":"assistant","content":ai_response})
+        try:
+            response = client.chat.completions.create(model="openai", messages=st.session_state.messages)
+            ai_response= response.choices[0].message.content
+                 
+            st.chat_message("assistant").write(ai_response)
+            st.session_state.messages.append({"role":"assistant","content":ai_response})
+            st.rerun()
+
+        except Exception as e:
+            st.error(f"error occured {e}")
+       
