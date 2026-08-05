@@ -1,0 +1,9 @@
+streamlit
+openai
+pypdf
+langchain-text-splitters
+langchain-huggingface
+sentence-transformers
+numpy
+torch
+torchvision
